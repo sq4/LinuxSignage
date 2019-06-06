@@ -1,5 +1,10 @@
-# Raspberry / Orange Pi Signage 
-This is a little installation 
+# Raspberry Pi / Orange Pi Signage 
+This is a little installation instruction to turn Rasberry Pi / Orange Pi into a graphical display.
+
+I'ts based on HTML5/CSS/JavaScript 
+Your imagination and knowledge about HTML5/CSS/JavaScript is the limit ;-) 
+
+i'ts also a good base for interactive screens, like photo-booth, mp3 jukebox, etc.
 
 ### Installing Xorg bare X 
 ```bash
@@ -33,83 +38,27 @@ and add the folowing lines befor the exit 0 line and save the file.
 Xorg -s 0 -quiet -nocursor &
 sudo -u pi /home/pi/autorun.sh >/home/pi/auto.log 2>&1 &
 ```
-And now whe have to make the autorun.sh
+
+if you need the mousepointer then remove -nocursor from the Xorg line.
+
+copy the autorun.sh file from this github to /home/pi/
+and change the executable bit. 
+```bash
+chmod +x autorun.sh
+```
+
+Make a folder in your /home/pi with the name display, in this folder you have to put your own webcontent wich you wish to display.
 
 ```bash
-vi /home/pi/autorun.sh
+mkdir /home/pi/display
 ```
-Copy/Paste or type :
-```bash
-#!/sbin/bash
-while true
-do
-/home/pi/Electron/electron --display=:0 /home/pi/display
-sleep 5
-done
-```
-now make the package.json in /home/pi/display
-```bash
-vi /home/pi/display/package.json
-```
-copy/past the folowing lines.
+copy package.json and app.json into /home/pi/display.
 
-```json
-{
-  "name": "smartDisplay",
-  "version": "1.0.0",
-  "description": "Simple and Quick singage display",
-  "repository": "electron/s",
-  "main": "app.js",
-  "scripts": {
-    "start": "electron app.js"
-  },
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^1.4.12"
-  }
-}
-```
-The next step is to make the app.js the 'engine for Electron' 
-```bash
-vi /home/pi/display/app.js
-```
-copy/paste the folowing lines and adjust your screensize (width and height) in this version it's 1920 x 1080
-```JavaScript
-var electron = require('electron') // http://electron.atom.io/docs/api
-var path = require('path') // https://nodejs.org/api/path.html
-var url = require('url') // https://nodejs.org/api/url.html
-var window = null
-const { exec } = require('child_process');
+### Final
 
-electron.app.setPath('userData', __dirname + '/data');
+copy the index.html / style.css / images etc. from your HTML5 project into /home/pi/display.
 
-electron.app.once('ready', function () {
-    window = new electron.BrowserWindow({
-        allowRunningInsecureContent: true,
-        width: 1920,
-        height: 1080,
-        backgroundColor: "#000000",
-        show: false,
-        frame: false
-    });
-
-    window.loadURL('file://' + __dirname + '/index.html');
-
-    window.on('closed', function () {
-        window = null;
-        electron.app.quit();
-    });
-
-    window.once('ready-to-show', function () {
-        window.setMenuBarVisibility(false);
-        window.show()
-	exec("sudo killall -9 omxplayer.bin");
-    })
-})
-```
-At this point you have to put the webcontent you wish to display in /home/pi/display with default starting point index.html. 
-
-Your imagination and knowledge about HTML5/CSS/JavaScript is the limit ;-) 
+after a reboot your html page sould appear. 
 
 
 
