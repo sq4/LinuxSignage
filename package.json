@@ -1,0 +1,14 @@
+{
+  "name": "smartDisplay",
+  "version": "1.0.0",
+  "description": "Simple and Quick singage display",
+  "repository": "electron/s",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.4.12"
+  }
+}
