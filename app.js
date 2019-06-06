@@ -26,6 +26,5 @@ electron.app.once('ready', function () {
     window.once('ready-to-show', function () {
         window.setMenuBarVisibility(false);
         window.show()
-	exec("sudo killall -9 omxplayer.bin");
     })
 })
