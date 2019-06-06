@@ -53,6 +53,7 @@ Make a folder in your /home/pi with the name display, in this folder you have to
 mkdir /home/pi/display
 ```
 copy package.json and app.json into /home/pi/display.
+change the resolution to fit your display in app.js (lines 12 and 13) so the page would be fit neatly. 
 
 ### Final
 
